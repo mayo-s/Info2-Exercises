@@ -17,12 +17,11 @@ public class Histogram {
 
 	public static void reader() {
 		FileReader input;
-		FileWriter output;
 		try {
 			input = new FileReader(
 					"C:\\Users\\mayo\\Dropbox\\Studium\\S2\\INFO2\\Exercises\\Histogram\\src\\aFile.txt");
-			int nextChar;
-			while ((nextChar = input.read()) != -1) {
+			char nextChar;
+			while ((nextChar = (char)input.read()) != -1) {
 				// check if character is a letter
 				if ((nextChar >= 65 && nextChar <= 90) || (nextChar >= 97 && nextChar <= 122)) {
 					System.out.print((char) nextChar);
@@ -34,26 +33,36 @@ public class Histogram {
 		}
 	}
 
-	public static void histogram(int tmpChar) {
-		int charCnt = 0;
-		int i = 0;
-		boolean counted = false;
+	public static void histogram(char tmpChar) {
+		// int charCnt = 0;
+		// int i = 0;
+		// boolean counted = false;
 
 		// check if character is already in arraylist
-		for(Character aChar : histogram){
-				if (tmpChar == histogram.get(i).getChar()) {
-					int newCnt = histogram.get(i).getCnt() + 1;
-					histogram.get(i).setCnt(newCnt);
-				}
-			
-				histogram.add(new Character((char) tmpChar, charCnt));
-			
+		for (Character someChar : histogram) {
+			if (tmpChar == (someChar.getChar())) {
+				int newCnt = someChar.getCnt() + 1;
+				someChar.setCnt(newCnt);
+			}
+
+			// histogram.add(new Character((char) tmpChar, charCnt));
+
 		}
 	}
 
 	public void printHistogram() {
 		for (Character aChar : histogram) {
-			System.out.println(aChar + ": ");
+			String stars = repeat("*", aChar.getCnt());
+			System.out.println(aChar.getChar() + ": " + stars);
+
 		}
+	}
+
+	public String repeat(String sign, int i) {
+		String result = "";
+		for (int c = 0; c < i; c++) {
+			result += sign;
+		}
+		return result;
 	}
 }
