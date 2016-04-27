@@ -8,24 +8,29 @@ public class Histogram {
 
 	public static void main(String[] args) throws IOException {
 		reader();
+		printHistogram();
 
 	}
 
 	public Histogram() {
-		histogram = new ArrayList<Character>();
 	}
 
 	public static void reader() {
+		histogram = new ArrayList<Character>();
 		FileReader input;
 		try {
 			input = new FileReader(
 					"C:\\Users\\mayo\\Dropbox\\Studium\\S2\\INFO2\\Exercises\\Histogram\\src\\aFile.txt");
-			char nextChar;
-			while ((nextChar = (char)input.read()) != -1) {
+			int nextChar;
+			while ((nextChar = input.read()) != -1) {
+				System.out.print((char)nextChar);
 				// check if character is a letter
 				if ((nextChar >= 65 && nextChar <= 90) || (nextChar >= 97 && nextChar <= 122)) {
-					System.out.print((char) nextChar);
-					histogram(nextChar);
+					if (histogram.isEmpty()) {
+						histogram.add(new Character((char)nextChar, 1));
+					} else {
+						histogram((char)nextChar);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -34,23 +39,24 @@ public class Histogram {
 	}
 
 	public static void histogram(char tmpChar) {
-		// int charCnt = 0;
-		// int i = 0;
-		// boolean counted = false;
 
+		boolean found = false;
 		// check if character is already in arraylist
 		for (Character someChar : histogram) {
 			if (tmpChar == (someChar.getChar())) {
 				int newCnt = someChar.getCnt() + 1;
 				someChar.setCnt(newCnt);
+				found = true;
+				break;
 			}
-
-			// histogram.add(new Character((char) tmpChar, charCnt));
-
+		}
+		if (!found) {
+			histogram.add(new Character((char) tmpChar, 1));
 		}
 	}
 
-	public void printHistogram() {
+	public static void printHistogram() {
+		System.out.println("\n");
 		for (Character aChar : histogram) {
 			String stars = repeat("*", aChar.getCnt());
 			System.out.println(aChar.getChar() + ": " + stars);
@@ -58,7 +64,7 @@ public class Histogram {
 		}
 	}
 
-	public String repeat(String sign, int i) {
+	public static String repeat(String sign, int i) {
 		String result = "";
 		for (int c = 0; c < i; c++) {
 			result += sign;
