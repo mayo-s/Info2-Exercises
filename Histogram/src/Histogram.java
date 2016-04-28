@@ -46,9 +46,9 @@ public class Histogram {
 					"C:\\Users\\mayo\\Dropbox\\Studium\\S2\\INFO2\\Exercises\\Histogram\\src\\anotherFile.txt");
 			for (Character aChar : histogram) {
 				String stars = repeat("*", aChar.getCnt());
-				output.write(aChar.getChar() + ": " + aChar.getCnt() + "\\n");
+				output.write(aChar.getChar() + ": " + aChar.getCnt() + "\r\n");
 				output.flush();
-				output.write(aChar.getChar() + ": " + stars + "\\n");
+				output.write(aChar.getChar() + ": " + stars + "\r\n");
 				output.flush();
 			}
 			output.close();
