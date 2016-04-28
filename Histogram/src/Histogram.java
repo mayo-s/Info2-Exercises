@@ -9,7 +9,7 @@ public class Histogram {
 	public static void main(String[] args) throws IOException {
 		reader();
 		printHistogram();
-
+		writer();
 	}
 
 	public Histogram() {
@@ -23,16 +23,35 @@ public class Histogram {
 					"C:\\Users\\mayo\\Dropbox\\Studium\\S2\\INFO2\\Exercises\\Histogram\\src\\aFile.txt");
 			int nextChar;
 			while ((nextChar = input.read()) != -1) {
-				System.out.print((char)nextChar);
+				System.out.print((char) nextChar);
 				// check if character is a letter
 				if ((nextChar >= 65 && nextChar <= 90) || (nextChar >= 97 && nextChar <= 122)) {
 					if (histogram.isEmpty()) {
-						histogram.add(new Character((char)nextChar, 1));
+						histogram.add(new Character((char) nextChar, 1));
 					} else {
-						histogram((char)nextChar);
+						histogram((char) nextChar);
 					}
 				}
 			}
+			input.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void writer() {
+		FileWriter output;
+		try {
+			output = new FileWriter(
+					"C:\\Users\\mayo\\Dropbox\\Studium\\S2\\INFO2\\Exercises\\Histogram\\src\\anotherFile.txt");
+			for (Character aChar : histogram) {
+				String stars = repeat("*", aChar.getCnt());
+				output.write(aChar.getChar() + ": " + aChar.getCnt() + "\\n");
+				output.flush();
+				output.write(aChar.getChar() + ": " + stars + "\\n");
+				output.flush();
+			}
+			output.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,7 +79,6 @@ public class Histogram {
 		for (Character aChar : histogram) {
 			String stars = repeat("*", aChar.getCnt());
 			System.out.println(aChar.getChar() + ": " + stars);
-
 		}
 	}
 
