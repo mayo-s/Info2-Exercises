@@ -1,10 +1,8 @@
 import java.io.*;
-import java.util.ArrayList;
 
 public class Histogram {
 
-	Character aChar;
-	static ArrayList<Character> histogram;
+	private static Character[] histogram = new Character[52];
 
 	public static void main(String[] args) throws IOException {
 		reader();
@@ -16,7 +14,6 @@ public class Histogram {
 	}
 
 	public static void reader() {
-		histogram = new ArrayList<Character>();
 		FileReader input;
 		try {
 			input = new FileReader(
@@ -24,16 +21,13 @@ public class Histogram {
 			int nextChar;
 			while ((nextChar = input.read()) != -1) {
 				System.out.print((char) nextChar);
-				// check if character is a letter
+				// check if character is a letter, if yes execute histogram
+				// method.
 				if ((nextChar >= 65 && nextChar <= 90) || (nextChar >= 97 && nextChar <= 122)) {
-					if (histogram.isEmpty()) {
-						histogram.add(new Character((char) nextChar, 1));
-					} else {
-						histogram((char) nextChar);
-					}
+					histogram((char) nextChar);
 				}
+				input.close();
 			}
-			input.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,6 +46,7 @@ public class Histogram {
 				output.flush();
 			}
 			output.close();
+			System.out.println("\nHistogram was writen to anotherFile.txt");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,7 +55,7 @@ public class Histogram {
 	public static void histogram(char tmpChar) {
 
 		boolean found = false;
-		// check if character is already in arraylist
+		// check if character is already in array
 		for (Character someChar : histogram) {
 			if (tmpChar == (someChar.getChar())) {
 				int newCnt = someChar.getCnt() + 1;
@@ -69,8 +64,13 @@ public class Histogram {
 				break;
 			}
 		}
+		// if character is not in array, add it
 		if (!found) {
-			histogram.add(new Character((char) tmpChar, 1));
+			if ((int) tmpChar >= 65 && (int) tmpChar <= 90) {
+				histogram[(tmpChar - 65)] = (new Character((char) tmpChar, 1));
+			} else {
+				histogram[(tmpChar - 60)] = (new Character((char) tmpChar, 1));
+			}
 		}
 	}
 
