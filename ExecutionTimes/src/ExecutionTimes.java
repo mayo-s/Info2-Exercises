@@ -1,18 +1,14 @@
+import java.math.*;
+import java.util.*;
+
 public class ExecutionTimes {
 
 	public static void main(String[] args) {
-		
-		//runTimes();
-		
-		//int primeNum = 2147483647; 
-		int primeNum = (int)(Math.pow(2, 31));
-		System.out.println("Checking " + primeNum + " if it is prime.");
-		if(isPrime(primeNum)){
-				System.out.println("Yeah... it's a prime#");
-		}
-		else{
-			System.out.println("Nope... Not a prime#");
-		}
+
+		// runTimes();
+		// checkPrimes();
+		bigPrime(20);
+
 	}
 
 	public static void runTimes() {
@@ -116,6 +112,17 @@ public class ExecutionTimes {
 
 	}
 
+	public static void checkPrimes() {
+		// int primeNum = 1;
+		int primeNum = (int) (Math.pow(2, 31));
+		System.out.println("Checking " + primeNum + " if it is prime.");
+		if (isPrime(primeNum)) {
+			System.out.println("Yeah... it's a prime#");
+		} else {
+			System.out.println("Nope... Not a prime#");
+		}
+	}
+
 	public static boolean isPrime(int n) {
 
 		long startTime;
@@ -123,16 +130,54 @@ public class ExecutionTimes {
 
 		startTime = System.currentTimeMillis();
 		boolean isPrime = true;
+		if (n == 1 || n == 2) {
+			isPrime = true;
+		} else {
 
-		for (int num = 2; num < (n/2) && isPrime; num++) {
-			if (n % num == 0) {
-				isPrime = false;
+			for (int num = 2; num < (n / 2) && isPrime; num++) {
+				if (n % num == 0) {
+					isPrime = false;
+				}
 			}
 		}
 		endTime = System.currentTimeMillis();
 		System.out.println("Time needed: " + (endTime - startTime) + "ms");
 
 		return isPrime;
+
+	}
+
+	public static void bigPrime(int bits) {
+
+		long startTime;
+		long endTime;
+
+		BigInteger bigInt;
+		Random rnd;
+
+		for (int i = 1; i <= 100; i++) {
+			bigInt = new BigInteger(bits, rnd = new Random());
+
+			boolean isPrime = true;
+
+			startTime = System.currentTimeMillis();
+			if (bigInt.equals(BigInteger.valueOf(1)) || bigInt.equals(BigInteger.valueOf(2))) {
+				System.out.println(bigInt + " is a prime");
+			} else {
+				for (int num = 2; bigInt.compareTo(BigInteger.valueOf(num)) > 0 && isPrime; num++) {
+					if (bigInt.mod(BigInteger.valueOf(num)).equals(BigInteger.valueOf(0))) {
+						isPrime = false;
+					}
+				}
+				if (isPrime) {
+					System.out.println(bigInt + " is a prime#");
+				} else {
+					System.out.println(bigInt + " is not a prime#");
+				}
+			}
+			endTime = System.currentTimeMillis();
+			System.out.println("Time needed: " + (endTime - startTime) + "ms");
+		}
 
 	}
 
