@@ -1,4 +1,3 @@
-
 /**
  * 
  * @author Philip Daduna & Mario Schuetz 
@@ -41,7 +40,8 @@ public class JD2GDConverter extends JulianDate {
 		date[1] = Integer.parseInt(input.next());
 		System.out.println("Day (DD): ");
 		date[2] = Integer.parseInt(input.next());
-
+		input.close();
+		
 		if (date[1] < 10)
 			System.out.println("Your Gregorian-Birthday is: " + date[2] + "-0" + date[1] + "-" + date[0]);
 		else
@@ -70,20 +70,27 @@ public class JD2GDConverter extends JulianDate {
 	private String weekday(int julianDay){
 		
 		String weekday;
-		if((int)((julianDay)%7) == 0)
+		if(((julianDay)%7) == 0){
+			weekday = "Monday";
+		}
+		else if(((julianDay)%6) == 0){
 			weekday = "Sunday";
-		else if((int)((julianDay)%7)%6 == 0)
+		}
+		else if(((julianDay)%5) == 0){
 			weekday = "Saturday";
-		else if((int)((julianDay)%7)%5 == 0)
+		}
+		else if(((julianDay)%4) == 0){
 			weekday = "Friday";
-		else if((int)((julianDay)%7)%4 == 0)
+		}
+		else if(((julianDay)%3) == 0){
 			weekday = "Thursday";
-		else if((int)((julianDay)%7)%3 == 0)
+		}
+		else if(((julianDay)%2) == 0){
 			weekday = "Wednesday";
-		else if((int)((julianDay)%7)%2 == 0)
+		}
+		else{
 			weekday = "Tuesday";
-		else
-			weekday = "Monday";			
+		}
 		
 		return weekday;
 	}
