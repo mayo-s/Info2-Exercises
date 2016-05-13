@@ -12,11 +12,8 @@ import java.time.format.DateTimeFormatter;
 
 public class JD2GDConverter extends JulianDate {
 
-	private int[] date;
-	private int[] today;
-	// private int year;
-	// private int month;
-	// private int day;
+	private static int[] date;
+	private static int[] today;
 
 	public JD2GDConverter() {
 		date = new int[3];
@@ -26,8 +23,13 @@ public class JD2GDConverter extends JulianDate {
 	public static void main(String[] args) {
 		JD2GDConverter JD2GDC = new JD2GDConverter();
 		JD2GDC.input();
-		System.out.println("Your Julian-Birthday is: " + JD2GDC.GD2JD());
+		int birthday = JD2GDC.GD2JD(date);
+		System.out.println("Your Julian-Birthday is: " + birthday);
 		JD2GDC.today();
+		int currentDay = JD2GDC.GD2JD(today);
+		System.out.println("You are " + (currentDay - birthday) + " days old.");
+		System.out.println("You were born on a " + JD2GDC.weekday(birthday));
+
 	}
 
 	private int[] input() {
@@ -40,17 +42,12 @@ public class JD2GDConverter extends JulianDate {
 		System.out.println("Day (DD): ");
 		date[2] = Integer.parseInt(input.next());
 
-		return date;
-	}
+		if (date[1] < 10)
+			System.out.println("Your Gregorian-Birthday is: " + date[2] + "-0" + date[1] + "-" + date[0]);
+		else
+			System.out.println("Today is the: " + date[0] + "-" + date[1] + "-" + date[2]);
 
-	private int GD2JD() {
-		int year = date[0];
-		int month = date[1];
-		int day = date[2];
-		int JD = day - 32075 + 1461 * (year + 4800 + (month - 14) / 12) / 4
-				+ 367 * (month - 2 - (month - 14) / 12 * 12) * 2 / 12
-				- 3 * ((year + 4900 + (month - 14) / 12) / 100) / 4;
-		return JD;
+		return date;
 	}
 
 	private int[] today() {
@@ -58,15 +55,36 @@ public class JD2GDConverter extends JulianDate {
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter df;
 		df = DateTimeFormatter.BASIC_ISO_DATE;
-		
+
 		today[0] = Integer.parseInt(now.format(df).toString().substring(0, 4));
 		today[1] = Integer.parseInt(now.format(df).toString().substring(4, 6));
 		today[2] = Integer.parseInt(now.format(df).toString().substring(6));
-		if(today[1] < 10)
-			System.out.println("Today is the: " + today[0] + "0" + today[1] + today[2]);
+		if (today[1] < 10)
+			System.out.println("Today is the: " + today[2] + "-" + "0" + today[1] + "-" + today[0]);
 		else
-			System.out.println("Today is the: " + today[0] + today[1] + today[2]);
-			
+			System.out.println("Today is the: " + today[2] + "-" + today[1] + "-" + today[0]);
+
 		return today;
+	}
+	
+	private String weekday(int julianDay){
+		
+		String weekday;
+		if((int)((julianDay)%7) == 0)
+			weekday = "Sunday";
+		else if((int)((julianDay)%7)%6 == 0)
+			weekday = "Saturday";
+		else if((int)((julianDay)%7)%5 == 0)
+			weekday = "Friday";
+		else if((int)((julianDay)%7)%4 == 0)
+			weekday = "Thursday";
+		else if((int)((julianDay)%7)%3 == 0)
+			weekday = "Wednesday";
+		else if((int)((julianDay)%7)%2 == 0)
+			weekday = "Tuesday";
+		else
+			weekday = "Monday";			
+		
+		return weekday;
 	}
 }
