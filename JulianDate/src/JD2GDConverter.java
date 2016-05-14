@@ -1,3 +1,4 @@
+
 /**
  * 
  * @author Philip Daduna & Mario Schuetz 
@@ -22,12 +23,14 @@ public class JD2GDConverter extends JulianDate {
 	public static void main(String[] args) {
 		JD2GDConverter JD2GDC = new JD2GDConverter();
 		JD2GDC.input();
-		int birthday = JD2GDC.GD2JD(date);
+		int birthday = JD2GDC.GD2JD(date); // convert to julian day
 		System.out.println("Your Julian-Birthday is: " + birthday);
 		JD2GDC.today();
 		int currentDay = JD2GDC.GD2JD(today);
 		System.out.println("You are " + (currentDay - birthday) + " days old.");
-		System.out.println("You were born on a " + JD2GDC.weekday(birthday));
+		String weekday = JD2GDC.weekday(birthday);
+		System.out.println("You were born on a " + weekday);
+		System.out.println(JD2GDC.specialMsg(weekday, birthday));
 
 	}
 
@@ -41,7 +44,7 @@ public class JD2GDConverter extends JulianDate {
 		System.out.println("Day (DD): ");
 		date[2] = Integer.parseInt(input.next());
 		input.close();
-		
+
 		if (date[1] < 10)
 			System.out.println("Your Gregorian-Birthday is: " + date[2] + "-0" + date[1] + "-" + date[0]);
 		else
@@ -66,32 +69,77 @@ public class JD2GDConverter extends JulianDate {
 
 		return today;
 	}
-	
-	private String weekday(int julianDay){
+
+	private String weekday(int julianDay) {
+
+		int year = date[0];
+		int month = date[1];
+		int day = date[2];
+		String dateString;
+		int dateInt;
+		String weekday = "";
+		if (month < 10) {
+			dateString = Integer.toString(year) + "0" + Integer.toString(month) + Integer.toString(day);
+			dateInt = Integer.parseInt(dateString);
+		} else {
+			dateString = Integer.toString(year) + Integer.toString(month) + Integer.toString(day);
+			dateInt = Integer.parseInt(dateString);
+		}
+		// System.out.println(dateInt);
+		// System.out.println(dateString);
+		// System.out.println(julianDay);
+		// System.out.println(julianDay%7);
 		
-		String weekday;
-		if(((julianDay)%7) == 0){
-			weekday = "Monday";
+		// 10 mystic days added after 04oct1582
+		if (dateInt < 15821004) {
+			if ((julianDay % 7) == 0) {
+				weekday = "Sunday";
+			} else if ((julianDay % 7) == 1) {
+				weekday = "Monday";
+			} else if ((julianDay % 7) == 2) {
+				weekday = "Tuesday";
+			} else if ((julianDay % 7) == 3) {
+				weekday = "Wednesday";
+			} else if ((julianDay % 7) == 4) {
+				weekday = "Thursday";
+			} else if ((julianDay % 7) == 5) {
+				weekday = "Friday";
+			} else {
+				weekday = "Saturday";
+			}
+		} else {
+			if ((julianDay % 7) == 0) {
+				weekday = "Monday";
+			} else if ((julianDay % 7) == 1) {
+				weekday = "Tuesday";
+			} else if ((julianDay % 7) == 2) {
+				weekday = "Wednesday";
+			} else if ((julianDay % 7) == 3) {
+				weekday = "Thursday";
+			} else if ((julianDay % 7) == 4) {
+				weekday = "Friday";
+			} else if ((julianDay % 7) == 5) {
+				weekday = "Saturday";
+			} else {
+				weekday = "Sunday";
+			}
+
 		}
-		else if(((julianDay)%6) == 0){
-			weekday = "Sunday";
-		}
-		else if(((julianDay)%5) == 0){
-			weekday = "Saturday";
-		}
-		else if(((julianDay)%4) == 0){
-			weekday = "Friday";
-		}
-		else if(((julianDay)%3) == 0){
-			weekday = "Thursday";
-		}
-		else if(((julianDay)%2) == 0){
-			weekday = "Wednesday";
-		}
-		else{
-			weekday = "Tuesday";
-		}
-		
+
 		return weekday;
 	}
+
+	private String specialMsg(String weekday, int jd){
+		String msg = "";
+		
+		if(weekday.equals("Sunday")){
+			msg += "You are one of those famous sunday-childs. BE PROUD! ";
+		}
+		if(jd%100 == 0){
+			msg += "Your birthday is divisable by 100";
+		}
+		
+		return msg;
+	}
+
 }
