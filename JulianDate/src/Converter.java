@@ -1,36 +1,32 @@
-
 /**
- * 
  * @author Philip Daduna & Mario Schuetz 
  * JD-Formula Source = http://aa.usno.navy.mil/faq/docs/JD_Formula.php
- *
  */
 
 import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class JD2GDConverter extends JulianDate {
+public class Converter extends JulianDate {
 
 	private static int[] date;
 	private static int[] today;
+	private static Converter converter;
 
-	public JD2GDConverter() {
+	public Converter() {
 		date = new int[3];
 		today = new int[3];
 	}
 
 	public static void main(String[] args) {
-		JD2GDConverter JD2GDC = new JD2GDConverter();
-		JD2GDC.input();
-		int birthday = JD2GDC.GD2JD(date); // convert to julian day
-		System.out.println("Your Julian-Birthday is: " + birthday);
-		JD2GDC.today();
-		int currentDay = JD2GDC.GD2JD(today);
-		System.out.println("You are " + (currentDay - birthday) + " days old.");
-		String weekday = JD2GDC.weekday(birthday);
-		System.out.println("You were born on a " + weekday);
-		System.out.println(JD2GDC.specialMsg(weekday, birthday));
+		converter = new Converter();
+		MetricDate metricDate = new MetricDate();
+		converter.input();
+		int birthday = converter.GD2JD(date); // convert to julian day
+		converter.today();
+		int currentDay = converter.GD2JD(today);
+		int[] metricBD = metricDate.JD2MD(currentDay - birthday);
+		converter.output(birthday, currentDay, metricBD);
 
 	}
 
@@ -44,13 +40,25 @@ public class JD2GDConverter extends JulianDate {
 		System.out.println("Day (DD): ");
 		date[2] = Integer.parseInt(input.next());
 		input.close();
-
+		
+		return date;
+	}
+	
+	private void output(int birthday, int currentDay, int[] metricBD){
+		
 		if (date[1] < 10)
 			System.out.println("Your Gregorian-Birthday is: " + date[2] + "-0" + date[1] + "-" + date[0]);
 		else
 			System.out.println("Today is the: " + date[0] + "-" + date[1] + "-" + date[2]);
-
-		return date;
+		
+		System.out.println("Your Julian-Birthday is: " + birthday);
+		System.out.println("You are " + (currentDay - birthday) + " days old.");
+		System.out.println("Your Metric-Age is: " + metricBD[0] + " years " + metricBD[1] + " month " + metricBD[2] + " weeks " + metricBD[3] + " days");
+		String weekday = converter.weekday(birthday);
+		System.out.println("You were born on a " + weekday);
+		System.out.println(converter.specialMsg(weekday, birthday));
+		
+		
 	}
 
 	private int[] today() {
@@ -123,7 +131,6 @@ public class JD2GDConverter extends JulianDate {
 			} else {
 				weekday = "Sunday";
 			}
-
 		}
 
 		return weekday;
