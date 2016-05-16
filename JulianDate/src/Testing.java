@@ -1,4 +1,6 @@
-
+/**
+ * @author Philip Daduna & Mario Schuetz 
+ */
 public class Testing {
 	
 	JulianDate jd = new JulianDate();

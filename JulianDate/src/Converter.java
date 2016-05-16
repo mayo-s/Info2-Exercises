@@ -155,5 +155,4 @@ public class Converter extends JulianDate {
 
 		return msg;
 	}
-
 }
