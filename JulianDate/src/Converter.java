@@ -1,3 +1,4 @@
+
 /**
  * @author Philip Daduna & Mario Schuetz 
  * JD-Formula Source = http://aa.usno.navy.mil/faq/docs/JD_Formula.php
@@ -40,25 +41,25 @@ public class Converter extends JulianDate {
 		System.out.println("Day (DD): ");
 		date[2] = Integer.parseInt(input.next());
 		input.close();
-		
+
 		return date;
 	}
-	
-	private void output(int birthday, int currentDay, int[] metricBD){
-		
+
+	private void output(int birthday, int currentDay, int[] metricBD) {
+
 		if (date[1] < 10)
 			System.out.println("Your Gregorian-Birthday is: " + date[2] + "-0" + date[1] + "-" + date[0]);
 		else
 			System.out.println("Today is the: " + date[0] + "-" + date[1] + "-" + date[2]);
-		
+
 		System.out.println("Your Julian-Birthday is: " + birthday);
 		System.out.println("You are " + (currentDay - birthday) + " days old.");
-		System.out.println("Your Metric-Age is: " + metricBD[0] + " years " + metricBD[1] + " month " + metricBD[2] + " weeks " + metricBD[3] + " days");
+		System.out.println("Your Metric-Age is: " + metricBD[0] + " years " + metricBD[1] + " month " + metricBD[2]
+				+ " weeks " + metricBD[3] + " days");
 		String weekday = converter.weekday(birthday);
 		System.out.println("You were born on a " + weekday);
 		System.out.println(converter.specialMsg(weekday, birthday));
-		
-		
+
 	}
 
 	private int[] today() {
@@ -97,7 +98,7 @@ public class Converter extends JulianDate {
 		// System.out.println(dateString);
 		// System.out.println(julianDay);
 		// System.out.println(julianDay%7);
-		
+
 		// 10 mystic days added after 04oct1582
 		if (dateInt < 15821004) {
 			if ((julianDay % 7) == 0) {
@@ -136,16 +137,16 @@ public class Converter extends JulianDate {
 		return weekday;
 	}
 
-	private String specialMsg(String weekday, int jd){
+	private String specialMsg(String weekday, int jd) {
 		String msg = "";
-		
-		if(weekday.equals("Sunday")){
+
+		if (weekday.equals("Sunday")) {
 			msg += "You are one of those famous sunday-childs. BE PROUD! ";
 		}
-		if(jd%100 == 0){
+		if (jd % 100 == 0) {
 			msg += "Your birthday is divisable by 100";
 		}
-		
+
 		return msg;
 	}
 

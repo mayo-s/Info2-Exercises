@@ -1,6 +1,5 @@
 /**
  * @author Philip Daduna & Mario Schuetz 
- * JD-Formula Source = http://aa.usno.navy.mil/faq/docs/JD_Formula.php
  */
 public class MetricDate extends JulianDate {
 
