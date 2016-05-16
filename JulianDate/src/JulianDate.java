@@ -1,7 +1,7 @@
 /**
  * 
- * @author Philip Daduna & Mario Schuetz GD2JD-Formula Source =
- *         http://aa.usno.navy.mil/faq/docs/JD_Formula.php
+ * @author Philip Daduna & Mario Schuetz 
+ * GD2JD-Formula Source = http://aa.usno.navy.mil/faq/docs/JD_Formula.php
  *         http://www.timeanddate.com/calendar/julian-gregorian-switch.html
  *
  */
@@ -42,11 +42,11 @@ public class JulianDate {
 		String dateString = Integer.toString(year) + Integer.toString(month) + Integer.toString(day);
 		int dateInt = Integer.parseInt(dateString);
 
-		int JD = 1721059 + day + totaldays + year * 365 + (year / 4) - (year / 100) + (year / 400);
+		int JD = 1721060 + day + totaldays + year * 365 + (year / 4) - (year / 100) + (year / 400);
 		// 10 mystic days added after 04oct1582
-		if (dateInt > 15821004) {
+		/*if (dateInt > 15821004) {
 			JD -= 10;
-		}
+		}*/
 		return JD;
 	}
 }

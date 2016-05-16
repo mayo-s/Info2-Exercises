@@ -28,6 +28,12 @@ public class Converter extends JulianDate {
 		int currentDay = converter.GD2JD(today);
 		int[] metricBD = metricDate.JD2MD(currentDay - birthday);
 		converter.output(birthday, currentDay, metricBD);
+		
+		// Test cases
+		Testing test = new Testing();
+		test.test1(currentDay);
+		test.test2(currentDay);
+		test.test3(currentDay);
 
 	}
 
@@ -79,7 +85,7 @@ public class Converter extends JulianDate {
 		return today;
 	}
 
-	private String weekday(int julianDay) {
+	public String weekday(int julianDay) {
 
 		int year = date[0];
 		int month = date[1];
