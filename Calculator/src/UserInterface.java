@@ -56,11 +56,11 @@ public class UserInterface implements ActionListener
         display = new JTextField();
         contentPane.add(display, BorderLayout.NORTH);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(5, 4));
+        JPanel buttonPanel = new JPanel(new GridLayout(7, 4));
             addButton(buttonPanel, "7");
             addButton(buttonPanel, "8");
             addButton(buttonPanel, "9");
-            addButton(buttonPanel, "C");
+            addButton(buttonPanel, "CLEAR");
             
             addButton(buttonPanel, "4");
             addButton(buttonPanel, "5");
@@ -70,14 +70,27 @@ public class UserInterface implements ActionListener
             addButton(buttonPanel, "1");
             addButton(buttonPanel, "2");
             addButton(buttonPanel, "3");
+            addButton(buttonPanel, "HEX");
+            
+
+            addButton(buttonPanel, "A");
+            addButton(buttonPanel, "B");
+            addButton(buttonPanel, "C");
+            buttonPanel.add(new JLabel(" "));
+            addButton(buttonPanel, "D");
+            addButton(buttonPanel, "E");
+            addButton(buttonPanel, "F");
             buttonPanel.add(new JLabel(" "));
             
             addButton(buttonPanel, "0");
             addButton(buttonPanel, "+");
             addButton(buttonPanel, "-");
-            addButton(buttonPanel, "=");
+            buttonPanel.add(new JLabel(" "));
+            
             addButton(buttonPanel, "*");
             addButton(buttonPanel, "/");
+            buttonPanel.add(new JLabel(" "));
+            addButton(buttonPanel, "=");
             
         contentPane.add(buttonPanel, BorderLayout.CENTER);
 
@@ -117,7 +130,13 @@ public class UserInterface implements ActionListener
            command.equals("6") ||
            command.equals("7") ||
            command.equals("8") ||
-           command.equals("9")) {
+           command.equals("9") ||
+           command.equals("A") ||
+           command.equals("B") ||
+           command.equals("C") ||
+           command.equals("D") ||
+           command.equals("E") ||
+           command.equals("F")) {
             int number = Integer.parseInt(command);
             calc.numberPressed(number);
         }
@@ -130,7 +149,7 @@ public class UserInterface implements ActionListener
         else if(command.equals("=")) {
             calc.equals();
         }
-        else if(command.equals("C")) {
+        else if(command.equals("CLEAR")) {
             calc.clear();
         }
         else if(command.equals("?")) {
@@ -141,6 +160,8 @@ public class UserInterface implements ActionListener
         }
         else if(command.equals("/")) {
             calc.divide();
+        }
+        else if(command.equals("HEX")) {
         }
         // else unknown command.
 
