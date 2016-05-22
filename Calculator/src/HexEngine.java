@@ -3,7 +3,7 @@ public class HexEngine extends CalcEngine {
 	private boolean hex;
 
 	public HexEngine() {
-		HexEngine hex = new HexEngine();
+		hex = false;
 	}
 	// intBack = toInt(hex);
 	// hexBack = toHex(in);
@@ -24,9 +24,9 @@ public class HexEngine extends CalcEngine {
 	}
 
 	public void activate() {
-		if (!hex)
-			hex = true;
+		if (!this.hex)
+			this.hex = true;
 		else
-			hex = false;
+			this.hex = false;
 	}
 }

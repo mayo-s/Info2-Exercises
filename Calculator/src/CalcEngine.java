@@ -19,8 +19,6 @@ public class CalcEngine
     private boolean haveLeftOperand;
     // The most recent operator that was entered.
     private char lastOperator;
-    // Is HEX-input active?
-    private boolean hex;
 
     // The current value (to be) shown in the display.
     private int displayValue;
@@ -33,7 +31,6 @@ public class CalcEngine
     public CalcEngine()
     {
         clear();
-        hex = false;
     }
 
     /**
@@ -125,10 +122,6 @@ public class CalcEngine
         displayValue = 0;
     }
     
-    public void hex(){
-    	hex = true;    	
-    }
-
     /**
      * @return The title of this calculation engine.
      */
