@@ -1,0 +1,3 @@
+ThIs iS a sAmple File.
+We are fooling around with Input/Output streams.
+How do we handle carriage returns?
