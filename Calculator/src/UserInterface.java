@@ -70,27 +70,27 @@ public class UserInterface implements ActionListener
             addButton(buttonPanel, "1");
             addButton(buttonPanel, "2");
             addButton(buttonPanel, "3");
-            addButton(buttonPanel, "HEX");
-            
+            buttonPanel.add(new JLabel(" "));            
 
             addButton(buttonPanel, "A");
             addButton(buttonPanel, "B");
             addButton(buttonPanel, "C");
-            buttonPanel.add(new JLabel(" "));
+            addButton(buttonPanel, "HEX");
+            
             addButton(buttonPanel, "D");
             addButton(buttonPanel, "E");
             addButton(buttonPanel, "F");
             buttonPanel.add(new JLabel(" "));
             
-            addButton(buttonPanel, "0");
-            addButton(buttonPanel, "+");
-            addButton(buttonPanel, "-");
             buttonPanel.add(new JLabel(" "));
+            addButton(buttonPanel, "0");
+            buttonPanel.add(new JLabel(" "));
+            addButton(buttonPanel, "=");
             
             addButton(buttonPanel, "*");
             addButton(buttonPanel, "/");
-            buttonPanel.add(new JLabel(" "));
-            addButton(buttonPanel, "=");
+            addButton(buttonPanel, "+");
+            addButton(buttonPanel, "-");
             
         contentPane.add(buttonPanel, BorderLayout.CENTER);
 
@@ -162,6 +162,7 @@ public class UserInterface implements ActionListener
             calc.divide();
         }
         else if(command.equals("HEX")) {
+        	calc.hex();
         }
         // else unknown command.
 
