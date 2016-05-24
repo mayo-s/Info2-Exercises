@@ -80,7 +80,7 @@ public class CalcEngine
     /**
      * The '*' button was pressed.
      */
-    public void times(){
+    public void multiply(){
     	 applyOperator('*');
     }
     

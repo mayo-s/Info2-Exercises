@@ -152,7 +152,7 @@ public class UserInterface implements ActionListener {
 		} else if (command.equals("?")) {
 			showInfo();
 		} else if (command.equals("*")) {
-			calc.times();
+			calc.multiply();
 		} else if (command.equals("/")) {
 			calc.divide();
 		} else if (command.equals("HEX")) {
