@@ -9,6 +9,7 @@ PreLabsAndTryout/
 java_bookingsystem/
 
 # ignore files and directories
+*.zip
 *.class
 *.pdf
 *.gif
