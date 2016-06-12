@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+
 /**
  * Working Calculator cloned from https://github.com/EliGould/Exercise07
  * @author Jack Lai & Mario Schuetz
@@ -21,14 +22,18 @@ import javax.swing.border.*;
 public class UserInterface implements ActionListener {
 
 	protected CalcEngine calc;
+	protected Set set;
 	protected boolean showingAuthor;
 
 	protected JFrame frame;
 	protected JTextField display;
 	protected JLabel status;
 	private Component[] hexComponents;
+	private Component[] nonSetComponents;
 	protected boolean isHex;
+	protected boolean isSet;
 	private JToggleButton toggleButton;
+	private JToggleButton toggleButton2;
 	private String displayValue;
 
 	/**
@@ -49,6 +54,7 @@ public class UserInterface implements ActionListener {
 	protected void makeFrame() {
 
 		hexComponents = new Component[6];
+		nonSetComponents = new Component[10];
 		frame = new JFrame(calc.getTitle());
 
 		JPanel contentPane = (JPanel) frame.getContentPane();
@@ -72,14 +78,16 @@ public class UserInterface implements ActionListener {
 		addButton(buttonPanel, "4");
 		addButton(buttonPanel, "5");
 		addButton(buttonPanel, "6");
-		addButton(buttonPanel, "?");
+		toggleButton2 = new JToggleButton("Set", false);
+		toggleButton2.addActionListener(this);
+		buttonPanel.add(toggleButton2);
 		addButton(buttonPanel, "*");
 		addButton(buttonPanel, "CE");
 
 		addButton(buttonPanel, "1");
 		addButton(buttonPanel, "2");
 		addButton(buttonPanel, "3");
-		buttonPanel.add(new JLabel(" "));
+		addButton(buttonPanel, "?");
 		addButton(buttonPanel, "+");
 		addButton(buttonPanel, "^");
 
@@ -105,6 +113,17 @@ public class UserInterface implements ActionListener {
 		hexComponents[4] = allComponents[28];
 		hexComponents[5] = allComponents[29];
 
+		nonSetComponents[0] = allComponents[3];
+		nonSetComponents[1] = allComponents[4];
+		nonSetComponents[2] = allComponents[10];
+		nonSetComponents[3] = allComponents[17];
+		nonSetComponents[4] = allComponents[24];
+		nonSetComponents[5] = allComponents[25];
+		nonSetComponents[6] = allComponents[26];
+		nonSetComponents[7] = allComponents[27];
+		nonSetComponents[8] = allComponents[28];
+		nonSetComponents[9] = allComponents[29];
+
 		for (Component tempComp : hexComponents) {
 			tempComp.setEnabled(false);
 		}
@@ -123,6 +142,9 @@ public class UserInterface implements ActionListener {
 
 		switch (command) {
 		case "=":
+			if(isSet){
+				set.output();				
+			}
 			if (!isHex)
 				try {
 					displayValue = calc.getDecSolution(displayValue);
@@ -157,26 +179,44 @@ public class UserInterface implements ActionListener {
 			break;
 
 		case "Hex":
-			System.out.println("HexHex");
+			// System.out.println("HexHex");
 			switchHex();
 			if (!displayValue.equals("")) {
 				displayValue = calc.getHexDisplayValue(displayValue);
 			}
 			break;
-
 		case "Dec":
 			switchHex();
-			if (displayValue.equals("")) {
+			if (!displayValue.equals("")) {
 				displayValue = calc.getDecDisplayValue(displayValue);
 			}
 			break;
 
+		case "Set":
+			switchSet();
+			break;
+		case "!Set":
+			switchSet();
+			break;
 		case "+":
-			displayValue += " " + command + " ";
+
+			if (isSet) {
+				int value = Integer.parseInt(displayValue);
+				set.add(value);
+
+			} else {
+				displayValue += " " + command + " ";
+			}
 			break;
 
 		case "-":
-			displayValue += " " + command + " ";
+			if (isSet) {
+				int value = Integer.parseInt(displayValue);
+				set.remove(value);
+				
+			} else {
+				displayValue += " " + command + " ";
+			}
 			break;
 
 		case "*":
@@ -206,7 +246,7 @@ public class UserInterface implements ActionListener {
 	}
 
 	protected void switchHex() {
-		
+
 		if (isHex) {
 			toggleButton.setText("Hex");
 			for (Component tempComp : hexComponents) {
@@ -218,6 +258,7 @@ public class UserInterface implements ActionListener {
 		}
 
 		else {
+			switchSet();
 			toggleButton.setText("Dec");
 			for (Component tempComp : hexComponents) {
 				tempComp.setEnabled(true);
@@ -226,12 +267,36 @@ public class UserInterface implements ActionListener {
 			isHex = true;
 		}
 	}
-	
-	
+
+	protected void switchSet() {
+
+		if (!isSet) {
+			set = new Set();
+			toggleButton2.setText("!Set");
+			for (Component tempComp : nonSetComponents) {
+				tempComp.setEnabled(false);
+			}
+
+			displayValue = "";
+			isSet = true;
+			isHex = false;
+		}
+
+		else {
+			toggleButton2.setText("Set");
+			nonSetComponents[0].setEnabled(true);
+			nonSetComponents[1].setEnabled(true);
+			nonSetComponents[2].setEnabled(true);
+			nonSetComponents[3].setEnabled(true);
+			displayValue = "";
+			isSet = false;
+		}
+	}
+
 	public void setVisible(boolean visible) {
 		frame.setVisible(visible);
 	}
-	
+
 	private void addButton(Container panel, String buttonText) {
 		JButton button = new JButton(buttonText);
 		button.addActionListener(this);
